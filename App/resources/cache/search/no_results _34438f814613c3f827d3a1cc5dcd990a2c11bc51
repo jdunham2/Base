@@ -1,0 +1,7 @@
+<?php $_shouldextend['5ad6f4cfbc9e7']=1; ?>
+
+<?php $this->startSection('content'); ?>
+    <br>
+    No listings found matching your search criteria.
+<?php $this->stopSection(); ?>
+<?php if (@$_shouldextend['5ad6f4cfbc9e7']) { echo $this->runChild('layout.app'); } ?>

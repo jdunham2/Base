@@ -1,0 +1,7 @@
+<?php $_shouldextend['5ade5efc0f190']=1; ?>
+<?php $this->startSection('title', 'Loan Calculator'); ?>
+
+<?php $this->startSection('content'); ?>
+    <?php echo $this->runChild('partials.loan_calculator'); ?>
+<?php $this->stopSection(); ?>
+<?php if (@$_shouldextend['5ade5efc0f190']) { echo $this->runChild('layout.app'); } ?>

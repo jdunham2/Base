@@ -1,0 +1,222 @@
+<?php $_shouldextend['5ad57fb97185b']=1; ?>
+
+<?php $this->startSection('content'); ?>
+
+<?php if(isset($user)): ?>
+    <?php $this->startSection('title', (stripslashes(strip_tags($user['agency'])))); ?>
+<?php /*$website->MetaDescription($website->text_words(stripslashes(strip_tags($user['title'])), 30));*/ ?>
+<?php /*$website->MetaKeywords($website->format_keywords($website->text_words(stripslashes(strip_tags($user['title'])), 20)));*/ ?>
+
+    <?php echo $this->runChild('partials/search/dealer_info'); ?>
+<?php endif; ?>
+
+
+
+<?php echo $this->runChild('partials.search.results_info'); ?>
+<div class="hidden-lg clear">
+    <!--    <span class="btn btn-default" style="width: 200px;">Filter</span>-->
+    <span class="btn btn-default" data-toggle="collapse" data-target=".refine-search-widget-mobile">
+        Modify Results
+    </span>
+
+    <div class="clear"></div>
+
+    <div class="refine-search-widget-mobile collapse">
+        <?php echo $this->runChild('partials.search.refine_search_widget'); ?>
+    </div>
+</div>
+
+<div class="results-container">
+
+    <?php
+    $iTotResults = 0;
+
+    if (!isset($_REQUEST["num"])) {
+        $num = 0;
+    } else {
+        $website->ms_i($_REQUEST["num"]);
+        $num = $_REQUEST["num"] - 1;
+    }
+
+
+    $i_listings_counter = 0;
+
+    $min_price = 0;
+    $max_price = 0;
+
+    foreach ($listings as $listing) {
+    if (is_numeric($listing["price"]) && $listing["price"] > $max_price) $max_price = $listing["price"];
+
+    if (is_numeric($listing["price"]) && $min_price == 0) $min_price = $listing["price"];
+    if (is_numeric($listing["price"]) && $min_price > $listing["price"]) $min_price = $listing["price"];
+
+    if ($iTotResults >= $num * $results_per_page && $iTotResults < ($num + 1) * $results_per_page) {
+
+    $i_listings_counter++;
+
+    $adFeatured = false;
+
+    if ($listing["featured"] == 1) {
+        $adFeatured = true;
+    }
+
+
+    $headline = $listing['headline'];
+
+    $strLink = "/details/" . $listing["id"];
+    $strContactLink = "/details/" . $listing["id"] . "?contact=1";
+
+
+    $listing["images"] = trim($listing["images"], ",");
+    $images = explode(",", $listing["images"]);
+
+    ?>
+    <div class="search-result">
+        <div class="panel panel-default">
+
+            <div class="panel-body padding-10">
+                <div class="row no-padding">
+                    <div class="col-xs-12 col-sm-4 no-padding">
+                        <a class="result-details-link" href="<?php echo static::e($strLink); ?>">
+                            <img alt="<?php echo static::e(stripslashes(strip_tags($headline))); ?>" class="img-res"
+                                <?php if($images[0] == "" || !file_exists(publicPath() . "/uploaded_images/" . $images[0] . ".jpg")): ?>
+                                    src="/images/no_pic.gif"
+                                <?php else: ?>
+                                    src="thumbnails/<?php echo static::e($images[0]); ?>.jpg"
+                                 <?php endif; ?>
+                            >
+                        </a>
+                    </div>
+                    <div class="col-xs-12 col-sm-8">
+                        <div class="details">
+                            <div class="col-sm-9">
+                                <h3 class="no-tb-margin"><strong><a href="<?php echo static::e($strLink); ?>"
+                                                                    class="search-result-title">
+                                            <?php echo static::e(stripslashes($headline)); ?>
+
+                                        </a></strong></h3>
+                            </div>
+                            <div class="col-sm-3">
+                                <h4 class="no-tb-margin shop4autos-green text-center">
+                                    <?php echo static::e($listing["price"]); ?>
+
+                                </h4>
+                            </div>
+
+
+                            <div class="hr-white"></div>
+                            <?php
+
+                            if (!empty(trim($listing["transmission"]))) {
+                                echo "<div class=\"col-sm-8 info-column\">";
+                                echo "Transmission " . $listing["transmission"];
+                                echo "</div>";
+                            }
+
+                            if (!empty(trim($listing["fuel_type"]))) {
+                                echo "<div class=\"col-sm-4 info-column\">";
+                                echo "Fuel Type: " . $listing["fuel_type"];
+                                echo "</div>";
+                            }
+
+                            if (!empty(trim($listing["power"]))) {
+                                echo "<div class=\"col-sm-8 info-column\">";
+                                echo "Engine Size: " . strip_tags(stripslashes($listing["power"]));
+                                echo "</div>";
+                            }
+
+                            if (!empty($listing["mileage"]) && $listing["mileage"] != "0") {
+                                $listing['mileage'] = preg_replace("/[,']/", "", $listing["mileage"]);
+
+                                echo "<div class=\"col-sm-4 info-column\">";
+                                echo "Mileage: " . number_format($listing["mileage"]);
+                                echo "</div>";
+                            }
+
+                            if (!empty(trim($listing["exterior_color"]))) {
+                                echo "<div class=\"col-md-8 info-column\">";
+                                echo "Exterior Color: " . $listing["exterior_color"];
+                                echo "</div>";
+                            }
+
+
+                            if (!empty(trim($listing["city"]))) {
+                                echo "<div class=\"col-md-4 info-column\">";
+                                echo "Location: " . ucwords(strtolower($listing['city']));
+                                echo "</div>";
+                            }
+
+                            if (!empty(trim($listing["fields"]))) {
+                                $listing_fields = unserialize($listing["fields"]);
+
+                                if (is_array($listing_fields)) {
+                                    foreach ($listing_fields as $key => $value) {
+                                        if (trim($value) == "") continue;
+
+                                        echo "<div class=\"col-md-3 info-column\">";
+                                        echo $key . ":";
+                                        echo "</div>";
+                                        echo "<div class=\"col-md-3 info-column\">" .
+                                            $value;
+                                        echo "</div>";
+                                    }
+                                }
+                            }
+                            ?>
+
+                        </div>
+                    </div>
+
+                    <div class="hr-white"></div>
+                    <div class="col-xs-12">
+                        <div class="col-sm-6">
+                            <a href="<?php echo $strContactLink; ?>" class="contact-link">
+                                <span class="search-listing-buttons btn">Make Inquiry</span>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 search-listing-buttons-right">
+
+                            <?php
+                            if (isset($_COOKIE["saved_listings"]) && strpos($_COOKIE["saved_listings"], $listing["id"] . ",") !== false) {
+                            ?>
+                            <a id="save_<?php echo $listing["id"]; ?>">
+                                <span class="search-listing-buttons btn">In Garage</span>
+                            </a>
+                            <?php
+                            } else {
+                            ?>
+                            <a href="javascript:SaveListing(<?php echo static::e($listing["id"]); ?>)" id="save_<?php echo static::e($listing["id"]); ?>">
+                                <span class="search-listing-buttons btn">Park in Garage</span>
+                            </a>
+                            <?php
+                            }
+                            ?>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+    <hr/>
+    <?php
+
+    }
+    $iTotResults++;
+    }
+    ?>
+</div>
+
+<div class="clear"></div>
+
+
+<?php if(ceil($total_listings / $results_per_page) > 1): ?>
+    <?php echo $this->runChild('partials.pagination'); ?>
+<?php endif; ?>
+
+
+<?php $this->stopSection(); ?>
+
+<?php if (@$_shouldextend['5ad57fb97185b']) { echo $this->runChild('layout.app'); } ?>

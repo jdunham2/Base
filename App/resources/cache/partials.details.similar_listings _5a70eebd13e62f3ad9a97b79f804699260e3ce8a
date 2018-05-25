@@ -1,0 +1,45 @@
+<?php if(count($similar_listings = $listing->similarListings())): ?>
+<h3>Similar Listings</h3>
+<hr/>
+<link rel="stylesheet" href="css/results.css">
+<div class="results-container">
+
+    <?php $__currentLoopData = $similar_listings; $this->addLoop($__currentLoopData); foreach($__currentLoopData as $listing): $this->incrementLoopIndices(); $loop = $this->getFirstLoop(); ?>
+        <?php 
+            $images = $listing->allImages();
+         ?>
+
+        <div <?php echo static::e($loop->index == 1 ? "style=\"padding-left:0px\"" : ""); ?>
+
+             <?php echo static::e(($loop->index == 3 ? "style=\"padding-right:0px\"" : "")); ?> class="col-md-4 col-xs-12">
+
+            <div class="details-similar-listings-wrap" onmouseenter="showTitle(this.getElementsByClassName('entry-overlay'))">
+                <a href="<?php echo static::e("/details/{$listing["id"]}"); ?>" class="btn-block">
+                    <img src="/uploaded_images/<?php echo static::e($images[0]); ?>.jpg">
+                    <div class="entry-overlay" hidden>
+                        <?php echo static::e((new \Domain\Listing($listing))['headline']); ?>
+
+                        <?php if($listing["price"] != ""): ?>
+                            , <?php echo static::e($listing['price']); ?>
+
+                        <?php endif; ?>
+
+                    </div>
+                </a>
+            </div>
+        </div>
+    <?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
+</div>
+
+<script>
+    function showTitle(vehicle) {
+        $(vehicle).show();
+    };
+
+</script>
+
+
+<div class="clear"></div>
+<br/>
+
+<?php endif; ?>

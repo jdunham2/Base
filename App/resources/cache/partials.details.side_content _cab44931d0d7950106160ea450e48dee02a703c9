@@ -1,0 +1,59 @@
+<?php
+use App\Services\Formatters\FormatPhoneNumber;
+use App\Services\Formatters\FormatWebsite;
+
+/**
+ * Show DFP ad atop dealer info:
+ * Will need to enable Small block ads script from template.php
+ */
+//		$toss = rand(0,10);
+//		echo "<div style='height:100px; width:300px; margin-left: -20px !important; text-align: center; vertical-align: center;'>";
+//		if ($toss >= 5){
+//			echo App\Services\DFP\DfpAdPlacement::showMedBlock1();
+//		}else {
+//			echo App\Services\DFP\DfpAdPlacement::showMedBlock2();
+//		}
+//		echo "</div>";
+?>
+
+<div class="details-dealer-info-box">
+    <?php if(isset($showDealerLogo)): ?>
+        <img src='uploaded_images/<?php echo static::e($listing_user['user_logo']); ?>.jpg' style='width:100%'/>"
+    <?php endif; ?>
+
+    <h3><?php echo static::e($arrUser["agency"]); ?></h3>
+
+    <p class="details_dealer_info">
+        <?php if($arrUser["address"]): ?>
+            <a href='#tab-contact' onclick='javascript:show_map()' data-toggle='tab'> <?php echo static::e($arrUser["address"]); ?></a><br>
+        <?php endif; ?>
+
+        <?php if($number = FormatPhoneNumber::formatted($arrUser["user_phone"])): ?>
+            <?php echo static::e($number); ?>
+
+            <br>
+        <?php endif; ?>
+
+        <a href="<?php echo static::e(FormatWebsite::formatted($arrUser["website"])); ?>">
+            <?php echo static::e(substr($arrUser["website"] ?: "", 0, 30) . "..."); ?>
+
+        </a>
+    </p>
+
+    <h4><a href="/<?php echo static::e($arrUser["custom_url"]); ?>">
+            See other listings from this seller
+        </a></h4>
+
+    <?php if($arrUser['username'] != "PrivatePartyAds"): ?>
+    <p><a class="btn btn-primary no-border" href="#top_of_page" data-toggle="collapse" data-target=".contact-collapse">
+        Contact Seller
+    </a></p>
+    <?php endif; ?>
+
+    <br>
+</div>
+
+
+<script>
+    document.getElementById("contact_adv_button").style.display = "none";
+</script>

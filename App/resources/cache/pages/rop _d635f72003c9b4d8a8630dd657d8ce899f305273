@@ -1,0 +1,32 @@
+<?php $_shouldextend['5ade453c3e3ab']=1; ?>
+
+<?php $this->startSection('title', 'Current Automotive Specials -- Print Offers'); ?>
+<?php $this->startSection('meta-description', 'Find Special Automotive Print Offers placed in Pennysaver or Evening Sun Newspapers.'); ?>
+
+<?php $this->startSection('content'); ?>
+
+<h2 class="text-center">Current Automotive Offers</h2>
+
+<div class="container">
+    <div class="col-sm-6">
+
+        <?php $__currentLoopData = $company_display_ads; $this->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $company): $this->incrementLoopIndices(); $loop = $this->getFirstLoop(); ?>
+        <div class="col-sm-12">
+            <h4><a href="<?php echo static::e($company->current_ad); ?>" target="_blank"><?php echo static::e($company->name); ?></a></h4>
+        </div>
+
+        <?php if($index == ceil(count($company_display_ads) / 2)): ?>
+    </div>
+    <div class='col-sm-6' style="text-align: left;">
+        <?php endif; ?>
+
+        <?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
+    </div>
+
+</div>
+
+<?php $this->stopSection(); ?>
+
+
+
+<?php if (@$_shouldextend['5ade453c3e3ab']) { echo $this->runChild('layout.app'); } ?>

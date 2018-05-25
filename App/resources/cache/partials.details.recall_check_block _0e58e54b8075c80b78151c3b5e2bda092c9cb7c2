@@ -1,0 +1,4 @@
+<div class="safteyRecallStatus">
+    <?php echo \App\Services\Formatters\FormatRecallStatusDiv::formatted($listing); ?>
+
+</div>

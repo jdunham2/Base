@@ -1,0 +1,14 @@
+<?php if($features = $listing->allFeatures()): ?>
+
+<div class="details-header-back"><span class="big-white-font">Vehicle Features</span></div>
+
+<?php $__currentLoopData = $features; $this->addLoop($__currentLoopData); foreach($__currentLoopData as $feature): $this->incrementLoopIndices(); $loop = $this->getFirstLoop(); ?>
+
+<div class="col-sm-3 no-left-padding text-left">
+    <img src="/images/check.png" alt=""/>
+    <?php echo static::e(preg_replace('/\s+/', ' ', $feature)); ?>
+
+</div>
+
+<?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
+<?php endif; ?>

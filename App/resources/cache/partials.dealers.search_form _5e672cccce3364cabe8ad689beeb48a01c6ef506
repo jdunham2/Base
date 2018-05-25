@@ -1,0 +1,121 @@
+<?php if(!isset($dealer)): ?>
+
+
+<h3 class="col-sm-6">Find dealers near you</h3>
+<div class="col-sm-6">
+    <small style="float:right;color:black;">Searching <?php echo static::e($dealers->count()); ?> Dealerships</small>
+    <br>
+    <small style="float:right;color:black;">and <?php echo static::e($total_listings); ?> vehicles!</small>
+</div>
+<!--Google Maps-->
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyAo0Yxc5ml4-5N_cSuFt1u899sEA8QAzRE">
+</script>
+<script type="text/javascript">
+    var all_dealers;
+    $(document).ready(function () {
+        all_dealers = <?php echo json_encode($dealers->toArray());; ?>;
+
+        all_dealers = $.map(all_dealers, function (value, index) {
+            return [value.raw];
+        });
+
+        console.log(all_dealers);
+        show_map();
+    });
+
+    function show_map() {
+        var map = '';
+        for (var i = 0; i < all_dealers.length; i++) {
+            if (all_dealers[i]['longitude'] == "" || all_dealers[i]['latitude'] == "")
+                continue;
+
+            var Latlng = new google.maps.LatLng(all_dealers[i]['latitude'], all_dealers[i]['longitude']);
+            if (map == '') {
+                map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 8,
+                    center: new google.maps.LatLng("42.7006", "-74.9243"), //cooperstown
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                });
+            }
+
+            var moreContent = (all_dealers[i][4] > 0 ? "<br><a href='/" + encodeURIComponent(all_dealers[i]['custom_url']) + "' target='_blank'> Click to see my " + all_dealers[i][4] + " listings</a>" : '')
+            var content = all_dealers[i]['agency'] + moreContent;
+            var url = "/" + encodeURIComponent(all_dealers[i]['custom_url']);
+            var myinfowindow = new google.maps.InfoWindow({
+                content: content
+            });
+            var zIndex = (moreContent.length);
+            var marker = new google.maps.Marker({
+                position: Latlng,
+                map: map,
+                title: all_dealers[i]['agency'],
+                infowindow: myinfowindow,
+                url: url,
+                clickable_url: true,
+                zIndex: zIndex
+            });
+
+            google.maps.event.addListener(marker, 'click', function () {
+                if (this.clickable_url) {
+                    window.open(this.url, '_blank');
+                }
+            });
+
+            google.maps.event.addListener(marker, 'mouseover', function () {
+                this.infowindow.open(map, this);
+            });
+
+            google.maps.event.addListener(marker, 'mouseout', function () {
+                this.infowindow.close(map, this);
+            });
+
+        }
+
+
+    }
+
+</script>
+
+<br/>
+<div id="map" style="width: 100%; height: 400px">
+    <img src="/images/tmp_coverage_map.jpg" class="width-100">
+</div>
+<!--end Google Maps-->
+
+<div class="clear"></div>
+<br/><br/>
+
+<hr/>
+<form action="<?php echo static::e(currentPage()); ?>">
+    <div class="col-md-3 no-left-padding">
+
+        Keyword
+        <br/>
+        <input type="text" class="form-control input-sm" id="dealer_keyword" name="dealer_keyword"
+               value="<?php echo static::e(old("dealer_keyword")); ?>">
+
+    </div>
+    <br/>
+    <div class="col-md-6">
+        <?php $distances = collect([10, 20, 30, 35, 40, 50, 75, 100, 150, 200, 250]); ?>
+        <select class="small-field" type="text" name="zip_radius" value="<?= old("zip_distance");?>">
+            <option value="">Radius</option>
+
+            <?php $distances->map(function ($distance) {
+                echo "<option value='{$distance}' " .
+                    isSelected('zip_radius', $distance). ">{$distance} mi</option>";
+            }); ?>
+
+        </select>
+
+        from ZIP: <input class="small-field" type="text" value="<?php echo static::e(old('zip')); ?>" name="zip"/>
+    </div>
+    <div class="clear"></div>
+
+    <br/>
+    <input class="btn btn-primary" type="submit" value="Search"/>
+
+
+</form>
+
+<?php endif; ?>

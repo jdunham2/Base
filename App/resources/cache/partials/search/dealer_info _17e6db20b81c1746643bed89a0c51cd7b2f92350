@@ -1,0 +1,30 @@
+<?php if($user): ?>
+    <div class="pull-right">
+        <br/><br/>
+
+        <?php if(!empty($user["user_phone"])): ?>
+            <img src="/images/phone_icon.png" alt="phone icon"/>
+            <?php echo static::e($user["user_phone"]); ?>
+
+            <br/>
+        <?php endif; ?>
+
+        <?php if(!empty($user["address"])): ?>
+            <?php echo static::e($user["address"]); ?>
+
+        <?php endif; ?>
+
+    </div>
+    <h1>
+        <?php if(!empty($user["user_logo"])): ?>
+            <?php echo show_pic($user["user_logo"], "medium"); ?>
+
+        <?php endif; ?>
+
+        <?php echo static::e($user['agency']); ?>
+
+    </h1>
+    <hr/>
+    <br/>
+
+<?php endif; ?>

@@ -1,0 +1,40 @@
+<?php $_shouldextend['5ade4a31e646b']=1; ?>
+
+<?php $this->startSection('title', "Search over {$make_count} Vehicle Makes or Brands on "); ?>
+<?php $this->startSection('meta-description', "Prefer searching by a specific brand? We offer a variety of tools to search by when looking for your next vehicle at Shop4Autos."); ?>
+<?php $this->startSection('meta-keywords'); ?>
+
+<?php $this->startSection('content'); ?>
+    <div class="container">
+
+        <div class="text-left">
+
+            <div class="clear"></div>
+            <h1>Browse Listings by Make</h1>
+
+            <div class='col-sm-4'>
+                <?php $__currentLoopData = $makes; $this->addLoop($__currentLoopData); foreach($__currentLoopData as $make): $this->incrementLoopIndices(); $loop = $this->getFirstLoop(); ?>
+
+                    <div>
+                        <a href="/search?make=<?php echo static::e(urlencode($make['name'])); ?>"
+                           class='make-link' title='<?php echo static::e($make['name']); ?>'>
+
+                            <?php echo static::e($make['name']); ?>
+
+                            <span class='browse_vehicle_count'>(<?php echo static::e($make['count']); ?>)</span>
+
+                        </a>
+                    </div>
+
+                    <?php if(($loop->index % $makes_per_column) == $makes_per_column - 1): ?>
+                        <?php /*make a new column*/ ?>
+                    </div>
+                    <div class="col-sm-4">
+                    <?php endif; ?>
+
+                <?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
+            </div>
+        </div>
+    </div>
+<?php $this->stopSection(); ?>
+<?php if (@$_shouldextend['5ade4a31e646b']) { echo $this->runChild('layout.app'); } ?>

@@ -1,0 +1,120 @@
+<?php $_shouldextend['5ad8f4d073666']=1; ?>
+
+<?php $this->startSection('content'); ?>
+<div class="container">
+    <div class="clear"></div>
+    <h3>Browse By Style</h3>
+
+    <div class="col-sm-5 col-xs-6 text-center">
+        <a href="/search?bodytype=a4wd">
+            <img class="search-bodytype" src="/images/vehicle_types/awd4wd.svg">
+            <span> AWD/4WD </span>
+        </a>
+    </div>
+
+    <div class="col-sm-5 col-xs-6 text-center">
+        <a href="/search?bodytype=Truck">
+            <img class="search-bodytype" src="/images/vehicle_types/truck.svg">
+            <span> Truck </span>
+        </a>
+    </div>
+
+    <div class="col-sm-5 col-xs-6 text-center">
+        <a href="/search?bodytype=Sedan">
+            <img class="search-bodytype" src="/images/vehicle_types/sedan.svg">
+            <span> Sedan </span>
+        </a>
+    </div>
+
+    <div class="col-sm-5 col-xs-6 text-center">
+        <a href="/search?bodytype=Convertible">
+            <img class="search-bodytype" src="/images/vehicle_types/convertible.svg">
+            <span> Convertible </span>
+        </a>
+    </div>
+
+    <div class="col-sm-5 col-xs-6 text-center">
+        <a href="/search?bodytype=Coupe">
+            <img class="search-bodytype" src="/images/vehicle_types/coupe.svg">
+            <span> Coupe </span>
+        </a>
+    </div>
+
+    <div class="col-sm-5 col-xs-6 text-center">
+        <a href="/search?bodytype=Hatchback">
+            <img class="search-bodytype" src="/images/vehicle_types/hatchback.svg">
+            <span> Hatchback </span>
+        </a>
+    </div>
+
+    <div class="col-sm-5 col-xs-6 text-center">
+        <a href="/search?bodytype=Wagon">
+            <img class="search-bodytype" src="/images/vehicle_types/wagon.svg">
+            <span> Wagon </span>
+        </a>
+    </div>
+
+    <div class="col-sm-5 col-xs-6 text-center">
+        <a href="/search?bodytype=SUV/Crossover">
+            <img class="search-bodytype" src="/images/vehicle_types/suv.svg">
+            <span> SUV/Crossover </span>
+        </a>
+    </div>
+
+    <div class="col-sm-5 col-xs-6 text-center">
+        <a href="/search?bodytype=Van">
+            <img class="search-bodytype" src="/images/vehicle_types/van.svg">
+            <span> Van </span>
+        </a>
+    </div>
+
+    <div class="col-sm-5 col-xs-6 text-center">
+        <a href="/search?bodytype=mpv">
+            <img class="search-bodytype" src="/images/vehicle_types/mpv.svg">
+            <span> MPV(Multipurpose Vehicle) </span>
+        </a>
+    </div>
+
+    <div class="col-sm-5 col-xs-6 text-center">
+        <a href="/search?bodytype=Hybrid/Electric">
+            <img class="search-bodytype" src="/images/vehicle_types/hybrid.svg">
+            <span> Hybrid/Electric </span>
+        </a>
+    </div>
+
+    <div class="col-sm-5 col-xs-6 text-center">
+        <a href="/search?bodytype=incomplete">
+            <img class="search-bodytype" src="/images/vehicle_types/commercial.svg">
+            <span> Commercial </span>
+        </a>
+    </div>
+
+    <div class="col-sm-5 col-xs-6 text-center">
+        <a href="/search?bodytype=motorcycle">
+            <img class="search-bodytype" src="/images/vehicle_types/motorcycle.svg">
+            <span> Motorcycle </span>
+        </a>
+    </div>
+
+    <div class="col-sm-5 col-xs-6 text-center">
+        <a href="/search?bodytype=trailer">
+            <img class="search-bodytype" src="/images/vehicle_types/trailer.svg">
+            <span> Trailer </span>
+        </a>
+    </div>
+
+    <div class="col-sm-5 col-xs-6 text-center">
+        <a href="/search?bodytype=tractor">
+            <img class="search-bodytype" src="/images/vehicle_types/tractor.svg">
+            <span> Tractor </span>
+        </a>
+    </div>
+
+</div>
+<br><br>
+<span class="col-sm-12">
+    <div>Icons from <a href="http://www.onlinewebfonts.com/icon" target="_blank">Icon Fonts</a> is licensed by CC BY 3.0</div>
+</span>
+
+<?php $this->stopSection(); ?>
+<?php if (@$_shouldextend['5ad8f4d073666']) { echo $this->runChild('layout.app'); } ?>

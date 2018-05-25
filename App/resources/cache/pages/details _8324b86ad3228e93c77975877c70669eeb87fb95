@@ -1,0 +1,87 @@
+<?php $_shouldextend['5ae0ef30c5af9']=1; ?>
+
+<?php $this->startSection('title', stripslashes(($listing['headline'] . " For Sale In " . $listing->city))); ?>
+<?php $this->startSection('meta-description', htmlentities(strip_tags(stripslashes(($listing->seller()->agency . " | " .$listing['headline']. " | " . $listing['description']))))); ?>
+<?php $this->startSection('meta-keywords', htmlentities(strip_tags(stripslashes(($listing->seller()->agency . " | " .$listing['headline']. " | " . $listing['description']))))); ?>
+
+<?php $this->startSection('sidebar'); ?>
+		<?php echo $this->runChild('partials.details.about_seller'); ?>
+<?php $this->stopSection(); ?>
+
+<?php $this->startSection('content'); ?>
+
+<?php echo $this->runChild('partials.details.contact_form'); ?>
+
+<?php if(isset($_GET["email_sent"])): ?>
+	<h3>Your message has been sent successfully!</h3><br/>
+<?php endif; ?>
+
+<div class="clear"></div>
+<br/>
+
+
+<h2 class="lfloat"><?php echo stripslashes(strip_tags($listing['headline']));?></h2>
+
+<span class="listing-details-price">
+<?php echo static::e($listing["price"]); ?>
+
+</span>
+
+<div class="clear"></div>
+
+
+
+  <div class="justify-align">
+		
+	<div class="details-header-back green-font col-sm-12" id="top_of_page">
+
+		<div class="col-sm-3 col-xs-4 text-center">
+			<a class="top-nav-link" href="#tab-details" data-toggle="tab">Details</a>
+		</div>
+		<?php
+		if($listing->username != "PrivatePartyAds" && ((trim($listing["latitude"])!=""&&trim($listing["longitude"])!="") || trim($listing["address"])!="" || trim($listing["location"])!=""))
+		{
+		?>
+		<div class="col-sm-3 col-xs-4 text-center">
+			<a class="top-nav-link" href="#tab-contact" onclick="javascript:show_map()" data-toggle="tab">Location</a>
+		</div>
+		<?php
+		} ?>
+		<div class="col-sm-3 col-xs-4 text-center">
+			<a class="top-nav-link" href="#tab-calculator" data-toggle="tab">Loan Calculator</a>
+		</div>
+		<div style="clear:both"></div>
+
+
+
+	
+	</div>
+				
+	<div class="tabbable">
+         
+          <div class="tab-content">
+		  <br/>
+            <div class="tab-pane active" id="tab-details">
+				<?php echo $this->runChild('partials.details.vehicle_details'); ?>
+			</div>
+			
+			
+            <div class="tab-pane" id="tab-contact">
+				<?php echo $this->runChild('partials.details.directions'); ?>
+			</div>
+
+			  <div class="tab-pane" id="tab-calculator">
+				<?php echo $this->runChild('partials.loan_calculator'); ?>
+			  </div>
+
+          </div>
+        </div>
+        <!-- /tabs -->
+</div><!--end listing details-->
+<div class="clear"></div>
+<br/><br/><br/>
+
+<?php echo $this->runChild('partials.details.similar_listings'); ?>
+
+<?php $this->stopSection(); ?>
+<?php if (@$_shouldextend['5ae0ef30c5af9']) { echo $this->runChild('layout.app'); } ?>
